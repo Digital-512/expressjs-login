@@ -1,11 +1,11 @@
 # expressjs-login
-expressjs-login is a simple and secure login and signup ready made system that will speed up your development. The code is very simple to read and modify, and is built with PHP, MySQL and jQuery (AJAX) using Bootstrap 3 for the form design as well as PHP-Mailer for user account verification and confirmation.
+expressjs-login is a simple and secure login and signup ready made system that will speed up your development. The code is very simple to read and modify, and is built with ExpressJS (NodeJS), MongoDB and jQuery using Bootstrap 4 for the form design as well as PHP-Mailer for user account verification and confirmation.
 
 <img src="https://raw.githubusercontent.com/fethica/PHP-Login/master/login/images/screenshot.png" alt="Login Page Screenshot" />
 
 ## Installation
 ### Clone the Repository (recursively to include the PHP-Mailer submodule)
-    $ git clone --recursive https://github.com/baiplr/php-login.git
+    $ git clone --recursive https://github.com/Digital-512/expressjs-login.git
 
 ### Creating the MySQL Database
 

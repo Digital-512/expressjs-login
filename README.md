@@ -100,9 +100,8 @@ If the username and/or the password are wrong the `checklogin.js` will send "Wro
 
 
 ###Signup/Login Workflow:
-> 1) Create new user using `signup.php` form
+> 1) Create new user using `signup.php` form  
 > (note: validation occurs both client and server side)  
->
 > <b>Validation requires: </b>  
 > - Passwords to match and be at least 4 characters
 > - Valid email address

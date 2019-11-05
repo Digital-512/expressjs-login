@@ -1,13 +1,13 @@
 # expressjs-login
-expressjs-login is a simple and secure login and signup ready made system that will speed up your development. The code is very simple to read and modify, and is built with ExpressJS (NodeJS), MongoDB and jQuery using Bootstrap 4 for the form design as well as PHP-Mailer for user account verification and confirmation.
+expressjs-login is a simple and secure login and signup ready made system that will speed up your development. The code is very simple to read and modify, and is built with ExpressJS (NodeJS), MongoDB and jQuery using Bootstrap 4 for the form design as well as Nodemailer for user account verification and confirmation.
 
 <img src="https://raw.githubusercontent.com/fethica/PHP-Login/master/login/images/screenshot.png" alt="Login Page Screenshot" />
 
 ## Installation
-### Clone the Repository (recursively to include the PHP-Mailer submodule)
-    $ git clone --recursive https://github.com/Digital-512/expressjs-login.git
+### Clone the Repository
+    $ git clone https://github.com/Digital-512/expressjs-login.git
 
-### Creating the MySQL Database
+### Creating the MongoDB Database
 
 Create database "login" and create the table "members" :
 
@@ -34,7 +34,7 @@ CREATE TABLE `loginAttempts` (
   PRIMARY KEY (`ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 ```
-### Setup the `login/dbconf.php` file
+### Setup the `login/dbconf.js` file
 ```php
 <?php
     //DATABASE CONNECTION VARIABLES
@@ -45,7 +45,7 @@ CREATE TABLE `loginAttempts` (
 
 ```
 
-### Setup the `login/config.php` file
+### Setup the `login/config.js` file
 <i>Read code comments for a description of each variable</i>
 
 ```php
@@ -93,8 +93,8 @@ CREATE TABLE `loginAttempts` (
 
 ### Check the Username and the Password using jQuery (Ajax) :
 
-If the user has the right username and password, then the `checklogin.php` will send 'true', register the username and the password in a session, and redirect to `index.php`.
-If the username and/or the password are wrong the `checklogin.php` will send "Wrong Username or Password".
+If the user has the right username and password, then the `checklogin.js` will send 'true', register the username and the password in a session, and redirect to `index.php`.
+If the username and/or the password are wrong the `checklogin.js` will send "Wrong Username or Password".
 
 
 ###Signup/Login Workflow:

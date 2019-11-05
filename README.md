@@ -6,6 +6,8 @@ expressjs-login is a simple and secure login and signup ready made system that w
 ## Installation
 ### Clone the Repository
     $ git clone https://github.com/Digital-512/expressjs-login.git
+    $ cd express-login
+    $ npm install
 
 ### Creating the MongoDB Database
 

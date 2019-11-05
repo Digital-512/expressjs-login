@@ -102,10 +102,10 @@ If the username and/or the password are wrong the `checklogin.js` will send "Wro
 ###Signup/Login Workflow:
 > 1) Create new user using `signup.php` form
 > (note: validation occurs both client and server side)
-> &nbsp;&nbsp;&nbsp;&nbsp;<b>Validation requires: </b>
-> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; - Passwords to match and be at least 4 characters
-> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; - Valid email address
-> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; - Unique username
+> &nbsp;<b>Validation requires: </b>
+> &nbsp;- Passwords to match and be at least 4 characters
+> &nbsp;- Valid email address
+> &nbsp;- Unique username
 > 2) Password gets hashed and new GUID is generated for User ID
 > 3) User gets added to database as unverified
 > 4) Email is sent to user email (or $admin_email if set) with verification link

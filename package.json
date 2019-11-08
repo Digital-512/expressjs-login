@@ -1,0 +1,23 @@
+{
+  "name": "expressjs-login",
+  "version": "1.0.0",
+  "description": "Simple and secure ExpressJS login system built with ExpressJS, MongoDB, jQuery and Bootstrap.",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Digital-512/expressjs-login.git"
+  },
+  "author": "Digital-512",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Digital-512/expressjs-login/issues"
+  },
+  "homepage": "https://github.com/Digital-512/expressjs-login#readme",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1"
+  }
+}

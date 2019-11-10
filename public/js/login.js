@@ -13,21 +13,15 @@ $(document).ready(function () {
                 url: "/login/checklogin",
                 data: { myusername: username, mypassword: password, rememberme: rememberMe },
                 dataType: 'JSON',
-                success: function (html) {
-                    //console.log(html.response + ' ' + html.username);
-                    if (html.response === 'true') {
+                success: function (response) {
+                    if (response.status) {
                         location.reload();
-                        return html.username;
                     } else {
-                        showMessage(html.response, true);
+                        showMessage(response.message, true);
                     }
                 },
-                error: function (textStatus, errorThrown) {
-                    //console.log(textStatus);
-                    console.log(errorThrown);
-                },
                 beforeSend: function () {
-                    $("#message").html('<div class="text-center"><img src="/images/ajax-loader.gif"></div>');
+                    $("#message").html('<div style="margin-bottom: 1rem;" class="text-center"><img src="/images/ajax-loader.gif"></div>');
                 }
             });
         } else {
@@ -58,20 +52,17 @@ $(document).ready(function () {
                 url: "/register/createuser",
                 data: { newuser: username, email: email, password: password },
                 dataType: 'JSON',
-                success: function (html) {
-                    //console.log(html.response + ' ' + html.username);
-                    if (html.response === 'true') {
-
+                success: function (response) {
+                    if (response.status) {
+                        showMessage(response.message, false);
+                        $("#submit").hide();
                     } else {
-                        showMessage(html.response, true);
+                        showMessage(response.message, true);
+                        $("#submit").show();
                     }
                 },
-                error: function (textStatus, errorThrown) {
-                    //console.log(textStatus);
-                    console.log(errorThrown);
-                },
                 beforeSend: function () {
-                    $("#message").html('<div class="text-center"><img src="/images/ajax-loader.gif"></div>');
+                    $("#message").html('<div style="margin-bottom: 1rem;" class="text-center"><img src="/images/ajax-loader.gif"></div>');
                 }
             });
         } else {

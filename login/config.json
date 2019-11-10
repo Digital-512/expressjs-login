@@ -1,0 +1,25 @@
+{
+    "site_name": "Test Site",
+    "max_attempts": 5,
+    "login_timeout": 300,
+    "admin_email": "",
+    "password_hash_iv": "8Nq2caZUDv5K3LJz_",
+    "email": {
+        "from_email": "youremail@domain.com",
+        "from_name": "Test Email",
+        "mail_server_type": "SMTP",
+        "smtp_server": "smtp.mail.domain.com",
+        "smtp_user": "youremail@domain.com",
+        "smtp_pw": "yourEmailPassword",
+        "smtp_port": 465,
+        "smtp_security": "SSL"
+    },
+    "email_msg": {
+        "verifymsg": "Click this link to verify your new account!",
+        "active_email": "Your new account is now active! Click this link to log in!"
+    },
+    "form_msg": {
+        "signupthanks": "Thank you for signing up! You will receive an email shortly confirming the verification of your account.",
+        "activemsg": "Your account has been verified! You may now login at <br><a href='%signin_url'>%signin_url</a>"
+    }
+}

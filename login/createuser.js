@@ -9,16 +9,13 @@ module.exports = async function (database, newuser, email, password) {
         newemail = utils.config.admin_email;
     }
     // Validation rules
-    const space_regex = /\s/g;
-    const username_regex = /^[A-Za-z0-9_.-]{1,32}$/g;
-    const email_regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    if (newuser.match(space_regex) || password.match(space_regex) || email.match(space_regex)) {
+    if (newuser.match(utils.regex.space) || password.match(utils.regex.space) || email.match(utils.regex.space)) {
         return {
             status: false,
             message: "Username, email and password cannot contain any spaces!"
         }
     }
-    if (!newuser.match(username_regex)) {
+    if (!newuser.match(utils.regex.username)) {
         return {
             status: false,
             message: "Username cannot contain special characters and must be between 1 and 32 characters."
@@ -30,7 +27,7 @@ module.exports = async function (database, newuser, email, password) {
             message: "Your password is too short! It must be at least 4 characters."
         }
     }
-    if (!email_regex.test(newemail)) {
+    if (!utils.regex.email.test(newemail)) {
         return {
             status: false,
             message: "Must provide a valid email address."
@@ -42,7 +39,9 @@ module.exports = async function (database, newuser, email, password) {
             id: newid,
             username: newuser,
             email: newemail,
-            password: newpw
+            password: newpw,
+            verified: false,
+            mod_timestamp: Date.now()
         }
         // Write data to the database and return response
         const members = database.collection("members");

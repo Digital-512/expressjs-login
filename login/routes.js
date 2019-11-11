@@ -1,6 +1,7 @@
 const express = require('express');
 const path = require('path');
 const createUser = require('./createuser');
+const checkLogin = require('./checklogin');
 const router = express.Router();
 
 module.exports = function (dbs) {
@@ -18,6 +19,10 @@ module.exports = function (dbs) {
         if (req.params.action) {
             switch (req.params.action) {
                 case 'checklogin':
+                    // Check login and get response
+                    checkLogin(dbs.login, req.ip, req.body.myusername, req.body.mypassword, req.body.rememberme).then(function (val) {
+                        res.json(val);
+                    });
                     break;
                 case 'logout':
                     break;

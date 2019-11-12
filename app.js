@@ -1,6 +1,7 @@
 const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
 const login = require('./login/routes');
 const initializeDatabases = require('./db');
 const app = express();
@@ -13,12 +14,29 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.json());
 // Support parsing of application/x-www-form-urlencoded post data
 app.use(bodyParser.urlencoded({ extended: true }));
+// Support cookie parsing
+app.use(cookieParser());
 
 // Initialize databases
 initializeDatabases().then(function (dbs) {
 
     // Set routes for expressjs-login
-    app.use('/', login(dbs));
+    app.use('/', login(dbs, '/'));
+
+    // Your pages that need user authentication
+    app.use('/', function (req, res) {
+        const session = login.utils.parsePayload(req.cookies.token);
+        if (!session.authenticated) {
+            // User is not authenticated, redirect to login page
+            res.redirect('/login');
+        } else {
+            // Display welcome page
+            res.sendFile(path.join(__dirname, 'public/welcome.html'));
+            // You can access data stored in payload
+            // console.log for debugging
+            console.log(session.data.username);
+        }
+    });
 
     // Start app
     app.listen(port, function () {

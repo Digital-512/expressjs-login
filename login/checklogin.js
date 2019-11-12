@@ -52,6 +52,41 @@ async function insertAttempt(database, ipAddress, username, lastAttempt) {
     }
     return false;
 }
+async function checkLogin(database, username, password, rememberMe) {
+    const members = database.collection("members");
+    // Search for user in collection members
+    const find_user = await members.findOne({ username: username });
+    if (!find_user) {
+        return {
+            status: false,
+            message: "Wrong username or password!"
+        }
+    }
+    // If user is found, continue
+    // Checks password entered against db password hash
+    if (utils.saltHashPassword(password, find_user.password.salt).passwordHash != find_user.password.passwordHash) {
+        return {
+            status: false,
+            message: "Wrong username or password!"
+        }
+    }
+    if (!find_user.verified) {
+        return {
+            status: false,
+            message: "Your account has been created, but you cannot log in until it has been verified."
+        }
+    }
+    // User authenticated, create a token
+    const token = utils.jwt.sign({ username }, utils.config.jwt_key, {
+        algorithm: utils.config.jwt_algorithm,
+        expiresIn: utils.config.jwt_timeout
+    });
+    return {
+        status: true,
+        token: token,
+        timeout: utils.config.jwt_timeout * 1000
+    }
+}
 module.exports = async function (database, ipAddress, username, password, rememberMe) {
     if (!username.match(utils.regex.username)) {
         return {
@@ -59,6 +94,7 @@ module.exports = async function (database, ipAddress, username, password, rememb
             message: "Username cannot contain special characters and must be between 1 and 32 characters."
         }
     }
+    // Check and update login attempts
     var lastAttempt = await checkAttempts(database, ipAddress, username);
     lastAttempt = await insertAttempt(database, ipAddress, username, lastAttempt);
     if (!lastAttempt) {
@@ -73,5 +109,6 @@ module.exports = async function (database, ipAddress, username, password, rememb
             message: "Maximum number of login attempts exceeded. Please wait " + Math.round(utils.config.login_timeout / 60) + " minutes before logging in again."
         }
     }
-    //checklogin
+    // Check login data and return response
+    return await checkLogin(database, username, password, rememberMe);
 }

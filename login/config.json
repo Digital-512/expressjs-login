@@ -4,7 +4,8 @@
     "login_timeout": 300,
     "admin_email": "",
     "jwt_key": "0sYKc692B7j1bXQ66uSebIzZD5W5YzoZ",
-    "jwt_timeout": 300,
+    "jwt_session_timeout": 300,
+    "jwt_rememberme_timeout": 7776000,
     "jwt_algorithm": "HS512",
     "password_hash_iv": "8Nq2caZUDv5K3LJz_",
     "email": {

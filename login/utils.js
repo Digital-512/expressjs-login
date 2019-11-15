@@ -22,7 +22,7 @@ module.exports.parsePayload = function (token) {
     if (!token) {
         return {
             authenticated: false,
-            err: 401
+            error: 401
         }
     }
     var payload = null;
@@ -34,13 +34,13 @@ module.exports.parsePayload = function (token) {
             // if the error thrown is because the JWT is unauthorized, return a 401 error
             return {
                 authenticated: false,
-                err: 401
+                error: 401
             }
         }
         // otherwise, return a bad request error
         return {
             authenticated: false,
-            err: 400
+            error: 400
         }
     }
     return {

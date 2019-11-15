@@ -77,14 +77,16 @@ async function checkLogin(database, username, password, rememberMe) {
         }
     }
     // User authenticated, create a token
+    const expires = (rememberMe ? utils.config.jwt_rememberme_timeout : utils.config.jwt_session_timeout);
     const token = utils.jwt.sign({ username }, utils.config.jwt_key, {
         algorithm: utils.config.jwt_algorithm,
-        expiresIn: utils.config.jwt_timeout
+        expiresIn: expires
     });
     return {
         status: true,
         token: token,
-        timeout: utils.config.jwt_timeout * 1000
+        remember: rememberMe,
+        timeout: expires * 1000
     }
 }
 module.exports = async function (database, ipAddress, username, password, rememberMe) {
@@ -110,5 +112,5 @@ module.exports = async function (database, ipAddress, username, password, rememb
         }
     }
     // Check login data and return response
-    return await checkLogin(database, username, password, rememberMe);
+    return await checkLogin(database, username, password, rememberMe === 'true');
 }

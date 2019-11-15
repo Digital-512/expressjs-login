@@ -21,7 +21,7 @@ app.use(cookieParser());
 initializeDatabases().then(function (dbs) {
 
     // Set routes for expressjs-login
-    app.use('/', login(dbs, '/'));
+    app.use('/', login(dbs.login, '/'));
 
     // Your pages that need user authentication
     app.use('/', function (req, res) {

@@ -5,7 +5,7 @@ const createUser = require('./createuser');
 const checkLogin = require('./checklogin');
 const router = express.Router();
 
-module.exports = function (dbs, homepage) {
+module.exports = function (database, homepage) {
 
     // GET requests
     router.get('/login', function (req, res) {
@@ -17,6 +17,13 @@ module.exports = function (dbs, homepage) {
             // User is not authenticated, render login page
             res.sendFile(path.join(__dirname, '../', 'public/login.html'));
         }
+    });
+    router.get('/logout', function (req, res) {
+        // Log out user on request
+        if (req.cookies.token) {
+            res.clearCookie('token');
+        }
+        res.redirect('/login');
     });
     router.get('/register', function (req, res) {
         const session = utils.parsePayload(req.cookies.token);
@@ -35,14 +42,12 @@ module.exports = function (dbs, homepage) {
             switch (req.params.action) {
                 case 'checklogin':
                     // Check login and get response
-                    checkLogin(dbs.login, req.ip, req.body.myusername, req.body.mypassword, req.body.rememberme).then(function (val) {
+                    checkLogin(database, req.ip, req.body.myusername, req.body.mypassword, req.body.rememberme).then(function (val) {
                         if (val.status) {
-                            res.cookie('token', val.token, { maxAge: val.timeout });
+                            res.cookie('token', val.token, (val.remember ? { maxAge: val.timeout, httpOnly: true } : { httpOnly: true }));
                         }
                         res.json(val);
                     });
-                    break;
-                case 'logout':
                     break;
             }
         }
@@ -52,7 +57,7 @@ module.exports = function (dbs, homepage) {
             switch (req.params.action) {
                 case 'createuser':
                     // Create new user and get response
-                    createUser(dbs.login, req.body.newuser, req.body.email, req.body.password).then(function (val) {
+                    createUser(database, req.body.newuser, req.body.email, req.body.password).then(function (val) {
                         res.json(val);
                     });
                     break;

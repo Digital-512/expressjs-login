@@ -3,6 +3,7 @@ const path = require('path');
 const utils = require('./utils');
 const createUser = require('./createuser');
 const checkLogin = require('./checklogin');
+const verifyUser = require('./verifyuser');
 const router = express.Router();
 
 module.exports = function (database, homepage) {
@@ -35,6 +36,12 @@ module.exports = function (database, homepage) {
             res.sendFile(path.join(__dirname, '../', 'public/register.html'));
         }
     });
+    router.get('/verifyuser/:uid?', function (req, res) {
+        verifyUser(database, req.params.uid).then(function (val) {
+            res.send(val.message);
+            //res.json(val);
+        });
+    });
 
     // POST requests
     router.post('/login/:action', function (req, res) {
@@ -60,8 +67,6 @@ module.exports = function (database, homepage) {
                     createUser(database, req.body.newuser, req.body.email, req.body.password).then(function (val) {
                         res.json(val);
                     });
-                    break;
-                case 'verifyuser':
                     break;
             }
         }

@@ -1,5 +1,6 @@
 const crypto = require('crypto');
 const jwt = require('jsonwebtoken');
+const nodemailer = require('nodemailer');
 const config = require('./config.json');
 
 var sha512 = function (password, salt) {
@@ -55,3 +56,4 @@ module.exports.regex = {
 }
 module.exports.config = config;
 module.exports.jwt = jwt;
+module.exports.mailTransport = nodemailer.createTransport(config.email.transport);

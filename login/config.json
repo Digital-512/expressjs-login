@@ -3,20 +3,25 @@
     "max_attempts": 5,
     "login_timeout": 300,
     "admin_email": "",
+    "account_verification": true,
+    "base_url": "http://localhost:3000/",
     "jwt_key": "0sYKc692B7j1bXQ66uSebIzZD5W5YzoZ",
-    "jwt_session_timeout": 300,
+    "jwt_session_timeout": 600,
     "jwt_rememberme_timeout": 7776000,
     "jwt_algorithm": "HS512",
     "password_hash_iv": "8Nq2caZUDv5K3LJz_",
     "email": {
-        "from_email": "youremail@domain.com",
-        "from_name": "Test Email",
-        "mail_server_type": "SMTP",
-        "smtp_server": "smtp.mail.domain.com",
-        "smtp_user": "youremail@domain.com",
-        "smtp_pw": "yourEmailPassword",
-        "smtp_port": 465,
-        "smtp_security": "SSL"
+        "transport": {
+            "pool": false,
+            "host": "smtp.mail.domain.com",
+            "port": 465,
+            "secure": true,
+            "auth": {
+                "user": "youremail@domain.com",
+                "pass": "yourEmailPassword"
+            }
+        },
+        "from": "'From Name' <youremail@domain.com>"
     },
     "email_msg": {
         "verifymsg": "Click this link to verify your new account!",

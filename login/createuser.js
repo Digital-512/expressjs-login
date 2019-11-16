@@ -1,8 +1,9 @@
 const utils = require('./utils');
+const sendMail = require('./mailsender');
 
 module.exports = async function (database, newuser, email, password) {
     // Generate new UUID and hash password
-    var newid = utils.getRandomString(16);
+    var newid = utils.getRandomString(32);
     var newpw = utils.saltHashPassword(password);
     var newemail = email;
     if (utils.config.admin_email) {
@@ -40,8 +41,8 @@ module.exports = async function (database, newuser, email, password) {
             username: newuser,
             email: newemail,
             password: newpw,
-            verified: false,
-            mod_timestamp: Date.now()
+            verified: utils.config.account_verification === false,
+            mod_timestamp: new Date()
         }
         // Write data to the database and return response
         const members = database.collection("members");
@@ -61,6 +62,10 @@ module.exports = async function (database, newuser, email, password) {
         }
         const write_data = await members.insertOne(data);
         if (write_data.result.ok) {
+            // Send verification email if verification is enabled
+            if (utils.config.account_verification) {
+                sendMail(newemail, newuser, newid, "verify").catch(console.error);
+            }
             // Return TRUE if write_data response is OK.
             return {
                 status: true,

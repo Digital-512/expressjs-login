@@ -12,7 +12,7 @@ async function checkAttempts(database, ipAddress, username) {
     return false;
 }
 async function insertAttempt(database, ipAddress, username, lastAttempt) {
-    const datetimeNow = Date.now();
+    const datetimeNow = new Date();
     var data = {
         ip: ipAddress,
         attempts: 1,

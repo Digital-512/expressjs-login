@@ -25,8 +25,9 @@
         "from": "'From Name' <youremail@domain.com>"
     },
     "email_msg": {
-        "verifymsg": "Click this link to verify your new account!",
-        "active_email": "Your new account is now active! Click this link to log in!",
+        "verifymsg": "Click this link to verify your new account!<br><a href='%verify_url'>%verify_url</a>",
+        "active_email": "Your new account is now active! Click this link to log in!<br><a href='%signin_url'>%signin_url</a>",
+        "resetpass": "We have sent this message because you requested a password reset.<br>To reset password and get back into your account, click the link below:<br><a href='%reset_url'>%reset_url</a><br><br>This link will expire in 1 hour.<br>If you did not attempt to reset password, please ignore this email.",
         "resetpass_not_exists": "You (or someone else) entered this email address when trying to change the password.<br><br>However, this email address is not on our database of registered users and therefore the attempted password change has failed.<br><br>If you did not attempt to reset password, please ignore this email."
     },
     "form_msg": {

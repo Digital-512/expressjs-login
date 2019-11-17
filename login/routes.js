@@ -5,6 +5,7 @@ const createUser = require('./createuser');
 const checkLogin = require('./checklogin');
 const verifyUser = require('./verifyuser');
 const resetPassword = require('./resetpassword');
+const renewSession = require('./sessionrenew');
 const router = express.Router();
 
 module.exports = function (database, homepage) {
@@ -78,6 +79,10 @@ module.exports = function (database, homepage) {
                     resetPassword.sendRequest(database, req.body.email).then(function (val) {
                         res.json(val);
                     });
+                    break;
+                case 'renewsession':
+                    // Renew session if requested
+                    res.json(renewSession(req, res));
                     break;
             }
         }

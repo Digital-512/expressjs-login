@@ -12,15 +12,36 @@
 
 <body class="text-center">
     <form class="form-signin" id="login-form">
-        <div id="message"></div>
+        <div class="message"></div>
         <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
         <input type="text" id="loginUsername" class="form-control" placeholder="Username" required="" autofocus="">
         <input type="password" id="loginPassword" class="form-control" placeholder="Password" required="">
         <label><input type="checkbox" id="remember-me"> Remember me</label>
         <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+        <button class="btn btn-lg btn-secondary btn-block" id="forgotpassbtn">Forgot password?</button>
+    </form>
+    <form class="form-signin" id="resetpass-form">
+        <div class="message"></div>
+        <h1 class="h3 mb-3 font-weight-normal">Reset password</h1>
+        <input type="email" id="resetpassEmail" class="form-control" placeholder="Email" required="">
+        <button id="submit2" class="btn btn-lg btn-success btn-block" type="submit">Submit</button>
+        <button class="btn btn-lg btn-secondary btn-block" id="backtologinbtn">Go back to login</button>
     </form>
     <script src="/js/jquery-3.4.1.min.js"></script>
     <script src="/js/bootstrap.min.js"></script>
+    <script>
+        $("#resetpass-form").hide();
+        $("#forgotpassbtn").click(function (event) {
+            event.preventDefault();
+            $("#login-form").hide();
+            $("#resetpass-form").show();
+        });
+        $("#backtologinbtn").click(function (event) {
+            event.preventDefault();
+            $("#login-form").show();
+            $("#resetpass-form").hide();
+        });
+    </script>
     <!-- The AJAX login script -->
     <script src="/js/login.js"></script>
 </body>

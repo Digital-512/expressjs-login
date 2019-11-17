@@ -10,7 +10,7 @@ $(document).ready(function () {
         if (username && password) {
             $.ajax({
                 type: "POST",
-                url: "/login/checklogin",
+                url: "/auth/checklogin",
                 data: { myusername: username, mypassword: password, rememberme: rememberMe },
                 dataType: 'JSON',
                 success: function (response) {
@@ -21,11 +21,39 @@ $(document).ready(function () {
                     }
                 },
                 beforeSend: function () {
-                    $("#message").html('<div style="margin-bottom: 1rem;" class="text-center"><img src="/images/ajax-loader.gif"></div>');
+                    $(".message").html('<div style="margin-bottom: 1rem;" class="text-center"><img src="/images/ajax-loader.gif"></div>');
                 }
             });
         } else {
             showMessage("Please enter a username and a password!", true);
+        }
+    });
+
+    // Reset password form
+    $("#resetpass-form").submit(function (event) {
+        event.preventDefault();
+        var email = $("#resetpassEmail").val();
+        if (email) {
+            $.ajax({
+                type: "POST",
+                url: "/auth/resetpass",
+                data: { email: email },
+                dataType: 'JSON',
+                success: function (response) {
+                    if (response.status) {
+                        showMessage(response.message, false);
+                        $("#submit2").hide();
+                    } else {
+                        showMessage(response.message, true);
+                        $("#submit2").show();
+                    }
+                },
+                beforeSend: function () {
+                    $(".message").html('<div style="margin-bottom: 1rem;" class="text-center"><img src="/images/ajax-loader.gif"></div>');
+                }
+            });
+        } else {
+            showMessage("Please enter email address!", true);
         }
     });
 
@@ -39,7 +67,7 @@ $(document).ready(function () {
         if (username && password && email) {
             // Check if passwords matches
             if (password !== password2) {
-                showMessage("Your password does not match!", true);
+                showMessage("Password and confirm password does not match!", true);
                 return;
             }
             // Check password length
@@ -49,8 +77,8 @@ $(document).ready(function () {
             }
             $.ajax({
                 type: "POST",
-                url: "/register/createuser",
-                data: { newuser: username, email: email, password: password },
+                url: "/auth/createuser",
+                data: { newuser: username, email: email, password: password, password2: password2 },
                 dataType: 'JSON',
                 success: function (response) {
                     if (response.status) {
@@ -62,7 +90,7 @@ $(document).ready(function () {
                     }
                 },
                 beforeSend: function () {
-                    $("#message").html('<div style="margin-bottom: 1rem;" class="text-center"><img src="/images/ajax-loader.gif"></div>');
+                    $(".message").html('<div style="margin-bottom: 1rem;" class="text-center"><img src="/images/ajax-loader.gif"></div>');
                 }
             });
         } else {
@@ -74,8 +102,8 @@ $(document).ready(function () {
 // Shows success or error message
 function showMessage(text, err) {
     if (!err) {
-        $("#message").html('<div class="alert alert-success" role="alert">' + text + '</div>');
+        $(".message").html('<div class="alert alert-success" role="alert">' + text + '</div>');
     } else {
-        $("#message").html('<div class="alert alert-danger" role="alert">' + text + '</div>');
+        $(".message").html('<div class="alert alert-danger" role="alert">' + text + '</div>');
     }
 }

@@ -4,6 +4,7 @@
     "login_timeout": 300,
     "admin_email": "",
     "account_verification": true,
+    "resetpass_timeout": 3600,
     "base_url": "http://localhost:3000/",
     "jwt_key": "0sYKc692B7j1bXQ66uSebIzZD5W5YzoZ",
     "jwt_session_timeout": 600,
@@ -25,10 +26,12 @@
     },
     "email_msg": {
         "verifymsg": "Click this link to verify your new account!",
-        "active_email": "Your new account is now active! Click this link to log in!"
+        "active_email": "Your new account is now active! Click this link to log in!",
+        "resetpass_not_exists": "You (or someone else) entered this email address when trying to change the password.<br><br>However, this email address is not on our database of registered users and therefore the attempted password change has failed.<br><br>If you did not attempt to reset password, please ignore this email."
     },
     "form_msg": {
         "signupthanks": "Thank you for signing up! You will receive an email shortly confirming the verification of your account.",
-        "activemsg": "Your account has been verified! You may now login at <br><a href='%signin_url'>%signin_url</a>"
+        "activemsg": "Your account has been verified! You may now login at <br><a href='%signin_url'>%signin_url</a>",
+        "resetpass": "We have sent an email to %email with further instructions."
     }
 }

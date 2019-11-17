@@ -1,7 +1,7 @@
 const utils = require('./utils');
 const sendMail = require('./mailsender');
 
-module.exports = async function (database, newuser, email, password) {
+module.exports = async function (database, newuser, email, password, password2) {
     // Generate new UUID and hash password
     var newid = utils.getRandomString(32);
     var newpw = utils.saltHashPassword(password);
@@ -10,13 +10,19 @@ module.exports = async function (database, newuser, email, password) {
         newemail = utils.config.admin_email;
     }
     // Validation rules
+    if (password !== password2) {
+        return {
+            status: false,
+            message: "Password and confirm password does not match!"
+        }
+    }
     if (newuser.match(utils.regex.space) || password.match(utils.regex.space) || email.match(utils.regex.space)) {
         return {
             status: false,
             message: "Username, email and password cannot contain any spaces!"
         }
     }
-    if (!newuser.match(utils.regex.username)) {
+    if (!utils.regex.username.test(newuser)) {
         return {
             status: false,
             message: "Username cannot contain special characters and must be between 1 and 32 characters."
@@ -64,7 +70,7 @@ module.exports = async function (database, newuser, email, password) {
         if (write_data.result.ok) {
             // Send verification email if verification is enabled
             if (utils.config.account_verification) {
-                sendMail(newemail, newuser, newid, "verify").catch(console.error);
+                sendMail(newemail, { user: newuser, id: newid }, "verify").catch(console.error);
             }
             // Return TRUE if write_data response is OK.
             return {

@@ -4,6 +4,7 @@ const utils = require('./utils');
 const createUser = require('./createuser');
 const checkLogin = require('./checklogin');
 const verifyUser = require('./verifyuser');
+const resetPassword = require('./resetpassword');
 const router = express.Router();
 
 module.exports = function (database, homepage) {
@@ -42,9 +43,19 @@ module.exports = function (database, homepage) {
             //res.json(val);
         });
     });
+    router.get('/resetpass/:token?', function (req, res) {
+        resetPassword.getRequest(database, req.params.token).then(function (val) {
+            if (val.status) {
+                res.send(val.message + "<br>Your new password is: <strong>" + val.password + "</strong><br>This password is only shown once!");
+            } else {
+                res.send(val.message);
+            }
+            //res.json(val);
+        });
+    });
 
     // POST requests
-    router.post('/login/:action', function (req, res) {
+    router.post('/auth/:action', function (req, res) {
         if (req.params.action) {
             switch (req.params.action) {
                 case 'checklogin':
@@ -56,15 +67,15 @@ module.exports = function (database, homepage) {
                         res.json(val);
                     });
                     break;
-            }
-        }
-    });
-    router.post('/register/:action', function (req, res) {
-        if (req.params.action) {
-            switch (req.params.action) {
                 case 'createuser':
                     // Create new user and get response
-                    createUser(database, req.body.newuser, req.body.email, req.body.password).then(function (val) {
+                    createUser(database, req.body.newuser, req.body.email, req.body.password, req.body.password2).then(function (val) {
+                        res.json(val);
+                    });
+                    break;
+                case 'resetpass':
+                    // Send reset password request
+                    resetPassword.sendRequest(database, req.body.email).then(function (val) {
                         res.json(val);
                     });
                     break;

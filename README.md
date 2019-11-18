@@ -17,6 +17,7 @@ expressjs-login is a simple and secure token-based login and signup ready made s
 ```js
 // Set routes for expressjs-login
 app.use('/', login(dbs.login, '/'));
+// express.router: login(login_database, homepage_route)
 ```
 ```js
 const session = login.utils.parsePayload(req.cookies.token);
@@ -32,7 +33,7 @@ const session = login.utils.parsePayload(req.cookies.token);
 	$ db.members.createIndex( { "verified": false, "mod_timestamp": 1 }, { expireAfterSeconds: 86400 } )
 
 ### Use template engines for production
-This script does not have any template engine installed and uses the default one (renders static files). The functionality of this template engine is very limited, so it is recommended to install another template engine, for example:
+This script does not have any template engine installed and uses the default one (renders static files). The functionality of the default renderer is very limited, so it is recommended to install another template engine, for example:
 * EJS: https://ejs.co/
 * PUG: https://pugjs.org/api/getting-started.html
 * More template engines: https://expressjs.com/en/resources/template-engines.html
@@ -98,6 +99,9 @@ This script does not have any template engine installed and uses the default one
     }
 }
 ```
+
+### Session renewal
+By default, session expires when exceeds time limit set in "jwt_session_timeout" (10 minutes default). We should not expect the user login every ten minutes if their token expires. To solve this, you can simply set "jwt_session_timeout" to very high number, for example, 99999. However, you may want to log out users if they are away or inactive, and extend session if they are active. To do this, the client application should send POST requests to `/auth/renewsession/` when it detects key presses, mouse activity or other actions. It works by taking the previous token (which is still valid), and returning a new token with a renewed expiry time.
 
 ### Check the Username and the Password using jQuery (Ajax):
 If the user has the right username and password, then the `checklogin.js` will send 'status: true', generate signed token, and redirect to homepage `welcome.html`. If the username and/or the password are wrong, the `checklogin.js` will send 'status: false, message: "Wrong Username or Password"'.

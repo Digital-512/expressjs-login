@@ -1,6 +1,5 @@
 const express = require('express');
 const path = require('path');
-const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const login = require('./login/routes');
 const initializeDatabases = require('./db');
@@ -11,9 +10,9 @@ const port = 3000;
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Support parsing of application/json type post data
-app.use(bodyParser.json());
+app.use(express.json());
 // Support parsing of application/x-www-form-urlencoded post data
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: true }));
 // Support cookie parsing
 app.use(cookieParser());
 

@@ -46,6 +46,6 @@ module.exports = function (req, res) {
         expiresIn: utils.config.jwt_session_timeout
     });
     // Set the new token as the users token cookie
-    res.cookie('token', newToken, { maxAge: utils.config.jwt_session_timeout * 1000, httpOnly: true });
+    res.cookie('token', newToken, { httpOnly: true });
     return { status: true }
 }

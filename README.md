@@ -38,7 +38,7 @@ This script does not have any template engine installed and uses the default one
 * More template engines: https://expressjs.com/en/resources/template-engines.html
 
 ### Configuration `login/config.json`
-> <b>IMPORTANT: </b>You must change "jwt_key" and "password_hash_iv" for because they are private keys and used for security.
+> <b>IMPORTANT: </b>You must change "jwt_key" and "password_hash_iv" because they are private keys and used for security.
 
 ```js
 {

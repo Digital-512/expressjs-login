@@ -101,7 +101,7 @@ This script does not have any template engine installed and uses the default one
 ```
 
 ### Session renewal
-By default, session expires when exceeds time limit set in "jwt_session_timeout" (10 minutes default). We should not expect the user login every ten minutes if their token expires. To solve this, you can simply set "jwt_session_timeout" to very high number, for example, 99999. However, you may want to log out users if they are away or inactive, and extend session if they are active. To do this, the client application should send POST requests to `/auth/renewsession/` when it detects key presses, mouse activity or other actions. It works by taking the previous token (which is still valid), and returning a new token with a renewed expiry time.
+By default, session expires when exceeds time limit set in "jwt_session_timeout" (10 minutes default). We should not expect the user login every ten minutes if their token expires. To solve this, you can simply set "jwt_session_timeout" to a very high number, for example, 99999. However, you may want to log out users if they are away or inactive, and extend session if they are active. To do this, the client application should send POST requests to `/auth/renewsession/` when it detects key presses, mouse activity or other actions. It works by taking the previous token (which is still valid), and returning a new token with a renewed expiry time.
 
 ### Check the Username and the Password using jQuery (Ajax):
 If the user has the right username and password, then the `checklogin.js` will send 'status: true', generate signed token, and redirect to homepage `welcome.html`. If the username and/or the password are wrong, the `checklogin.js` will send 'status: false, message: "Wrong Username or Password"'.
@@ -120,4 +120,4 @@ If the user has the right username and password, then the `checklogin.js` will s
 > 6) Verified user may now log in using one-time session or extended (remember me) session
 
 ### Attribution
-This script is based upon the original fethica PHP-login script, version 2.0, which can be found [here](https://github.com/therecluse26/PHP-Login/tree/v2.0). This script is improved continuation of the PHP-login v2.0 script and is created especially for NodeJS using ExpressJS.
+This script is based upon the original fethica PHP-login script, version 2.0, which can be found [here](https://github.com/therecluse26/PHP-Login/tree/v2.0). This script is improved continuation of the PHP-login v2.0 script and is created specially for NodeJS using ExpressJS.

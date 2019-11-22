@@ -90,7 +90,7 @@ async function checkLogin(database, username, password, rememberMe) {
     }
 }
 module.exports = async function (database, ipAddress, username, password, rememberMe) {
-    if (!username.match(utils.regex.username)) {
+    if (!utils.regex.username.test(newuser)) {
         return {
             status: false,
             message: "Username cannot contain special characters and must be between 1 and 32 characters."

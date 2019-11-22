@@ -40,7 +40,7 @@ module.exports = async function (database, newuser, email, password, password2) 
             message: "Must provide a valid email address."
         }
     }
-    if ((newuser, password, email)) {
+    if (newuser && password && password2 && email) {
         // New user data
         var data = {
             id: newid,

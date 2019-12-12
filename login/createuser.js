@@ -16,12 +16,6 @@ module.exports = async function (database, newuser, email, password, password2) 
             message: "Password and confirm password does not match!"
         }
     }
-    if (newuser.match(utils.regex.space) || password.match(utils.regex.space) || email.match(utils.regex.space)) {
-        return {
-            status: false,
-            message: "Username, email and password cannot contain any spaces!"
-        }
-    }
     if (!utils.regex.username.test(newuser)) {
         return {
             status: false,
@@ -65,6 +59,13 @@ module.exports = async function (database, newuser, email, password, password2) 
                 status: false,
                 message: "Entered email address already exists!"
             }
+        }
+        // Check for user id collisions. The probability of collision is extremely low
+        // but it exists. Generate new id if collision is found.
+        const id_exists = await members.countDocuments({ id: newid }, { limit: 1 });
+        if (id_exists) {
+            newid = utils.getRandomString(32);
+            data.id = newid;
         }
         const write_data = await members.insertOne(data);
         if (write_data.result.ok) {

@@ -50,7 +50,6 @@ module.exports.parsePayload = function (token) {
     }
 }
 module.exports.regex = {
-    space: /\s/g,
     username: /^[A-Za-z0-9_.-]{1,32}$/,
     email: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
 }

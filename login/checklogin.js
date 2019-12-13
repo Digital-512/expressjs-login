@@ -2,7 +2,7 @@ const utils = require('./utils');
 
 async function checkAttempts(database, ipAddress, username) {
     const attempts = database.collection("loginAttempts");
-    const find_attempt = await attempts.findOne({ ip: ipAddress, username: username });
+    const find_attempt = await attempts.findOne({ ip: ipAddress, username });
     if (find_attempt) {
         return {
             attempts: find_attempt.attempts,
@@ -37,7 +37,7 @@ async function insertAttempt(database, ipAddress, username, lastAttempt) {
             } else {
                 currentAttempts = 1;
             }
-            const update_attempts = await attempts.updateOne({ ip: ipAddress, username: username }, { $set: { attempts: currentAttempts, lastlogin: datetimeNow } });
+            const update_attempts = await attempts.updateOne({ ip: ipAddress, username }, { $set: { attempts: currentAttempts, lastlogin: datetimeNow } });
             if (update_attempts.result.ok) {
                 return {
                     attempts: currentAttempts,
@@ -55,7 +55,7 @@ async function insertAttempt(database, ipAddress, username, lastAttempt) {
 async function checkLogin(database, username, password, rememberMe) {
     const members = database.collection("members");
     // Search for user in collection members
-    const find_user = await members.findOne({ username: username });
+    const find_user = await members.findOne({ username });
     if (!find_user) {
         return {
             status: false,

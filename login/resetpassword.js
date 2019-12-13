@@ -16,7 +16,7 @@ module.exports.sendRequest = async function (database, email) {
     }
     const members = database.collection("members");
     // Search for user in collection members
-    const find_user = await members.findOne({ email: email });
+    const find_user = await members.findOne({ email });
     // For security reasons, if user does not exist, it should not be disclosed
     // in reset password form. Instead, send email to provided address.
     if (!find_user) {
@@ -53,7 +53,7 @@ module.exports.sendRequest = async function (database, email) {
 module.exports.getRequest = async function (database, token) {
     if (token) {
         const pass_resets = database.collection("passResets");
-        const find_token = await pass_resets.findOne({ token: token });
+        const find_token = await pass_resets.findOne({ token });
         if (!find_token) {
             // Password reset request not found
             return {
@@ -79,7 +79,7 @@ module.exports.getRequest = async function (database, token) {
             }
         }
         // Delete password reset request from database
-        const delete_request = await pass_resets.deleteOne({ token: token });
+        const delete_request = await pass_resets.deleteOne({ token });
         if (!delete_request.result.ok) {
             return {
                 status: false,

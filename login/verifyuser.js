@@ -1,11 +1,11 @@
 const utils = require('./utils');
 const sendMail = require('./mailsender');
 
-module.exports = async function (database, uid) {
-    if (uid) {
+module.exports = async function (database, id) {
+    if (id) {
         const members = database.collection("members");
         // Search for user in collection members
-        const find_user = await members.findOne({ id: uid });
+        const find_user = await members.findOne({ id });
         if (!find_user || find_user.verified) {
             return {
                 status: false,
@@ -13,10 +13,10 @@ module.exports = async function (database, uid) {
             }
         }
         // Update account status to verified and return response
-        const update_v = await members.updateOne({ id: uid }, { $set: { verified: true, mod_timestamp: new Date() } });
+        const update_v = await members.updateOne({ id }, { $set: { verified: true, mod_timestamp: new Date() } });
         if (update_v.result.ok) {
             // Send email about verification status
-            sendMail(find_user.email, { user: find_user.username, id: uid }, "active").catch(console.error);
+            sendMail(find_user.email, { user: find_user.username, id }, "active").catch(console.error);
             return {
                 status: true,
                 message: utils.config.form_msg.activemsg.replace(/\%signin_url/g, utils.config.base_url + "login")

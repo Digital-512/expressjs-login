@@ -13,7 +13,7 @@ async function checkAttempts(database, ipAddress, username) {
 }
 async function insertAttempt(database, ipAddress, username, lastAttempt) {
     const datetimeNow = new Date();
-    var data = {
+    let data = {
         ip: ipAddress,
         attempts: 1,
         lastlogin: datetimeNow,
@@ -29,7 +29,7 @@ async function insertAttempt(database, ipAddress, username, lastAttempt) {
             }
         }
     } else {
-        var currentAttempts = lastAttempt.attempts;
+        let currentAttempts = lastAttempt.attempts;
         const timeDiff = Math.floor((new Date(datetimeNow).getTime() - new Date(lastAttempt.lastlogin).getTime()) / 1000);
         if (currentAttempts <= utils.config.max_attempts || timeDiff > utils.config.login_timeout) {
             if (timeDiff <= utils.config.login_timeout) {
@@ -97,7 +97,7 @@ module.exports = async function (database, ipAddress, username, password, rememb
         }
     }
     // Check and update login attempts
-    var lastAttempt = await checkAttempts(database, ipAddress, username);
+    let lastAttempt = await checkAttempts(database, ipAddress, username);
     lastAttempt = await insertAttempt(database, ipAddress, username, lastAttempt);
     if (!lastAttempt) {
         return {

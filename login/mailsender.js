@@ -1,7 +1,7 @@
 const utils = require('./utils');
 
 module.exports = async function (email, data, type) {
-    var message = {
+    let message = {
         from: utils.config.email.from,
         to: email,
         subject: null,

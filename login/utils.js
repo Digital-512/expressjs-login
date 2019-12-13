@@ -3,10 +3,10 @@ const jwt = require('jsonwebtoken');
 const nodemailer = require('nodemailer');
 const config = require('./config.json');
 
-var sha512 = function (password, salt) {
-    var hash = crypto.createHmac('sha512', salt);
+const sha512 = function (password, salt) {
+    const hash = crypto.createHmac('sha512', salt);
     hash.update(password);
-    var value = hash.digest('hex');
+    const value = hash.digest('hex');
     return {
         salt: salt,
         passwordHash: value
@@ -26,7 +26,7 @@ module.exports.parsePayload = function (token) {
             error: 401
         }
     }
-    var payload = null;
+    let payload = null;
     try {
         // Parse the JWT string and store the result in payload
         payload = jwt.verify(token, config.jwt_key);

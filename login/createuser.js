@@ -3,9 +3,9 @@ const sendMail = require('./mailsender');
 
 module.exports = async function (database, newuser, email, password, password2) {
     // Generate new UUID and hash password
-    var newid = utils.getRandomString(32);
-    var newpw = utils.saltHashPassword(password);
-    var newemail = email;
+    let newid = utils.getRandomString(32);
+    let newpw = utils.saltHashPassword(password);
+    let newemail = email;
     if (utils.config.admin_email) {
         newemail = utils.config.admin_email;
     }
@@ -36,7 +36,7 @@ module.exports = async function (database, newuser, email, password, password2) 
     }
     if (newuser && password && password2 && email) {
         // New user data
-        var data = {
+        let data = {
             id: newid,
             username: newuser,
             email: newemail,

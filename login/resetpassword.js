@@ -32,7 +32,7 @@ module.exports.sendRequest = async function (database, email) {
     // Generate reset password url
     const url = utils.config.base_url + "resetpass/" + token;
     const pass_resets = database.collection("passResets");
-    var data = {
+    let data = {
         token: token,
         userId: find_user.id,
         createdAt: new Date()

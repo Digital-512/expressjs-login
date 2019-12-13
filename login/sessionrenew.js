@@ -8,7 +8,7 @@ module.exports = function (req, res) {
             error: 401
         }
     }
-    var payload = null;
+    let payload = null;
     try {
         payload = utils.jwt.verify(token, utils.config.jwt_key);
     } catch (e) {

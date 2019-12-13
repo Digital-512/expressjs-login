@@ -16,14 +16,19 @@ app.use(express.urlencoded({ extended: true }));
 // Support cookie parsing
 app.use(cookieParser());
 
-// Initialize databases
-initializeDatabases().then(function (dbs) {
+const startApp = async function () {
+    // Initialize databases
+    const dbs = await initializeDatabases().catch((err) => {
+        console.error("Failed to make all database connections!");
+        console.error(err);
+        process.exit(1);
+    });
 
     // Set routes for expressjs-login
     app.use('/', login(dbs.login, '/'));
 
     // Your pages that need user authentication
-    app.use('/', function (req, res) {
+    app.use('/', (req, res) => {
         const session = login.utils.parsePayload(req.cookies.token);
         if (!session.authenticated) {
             // User is not authenticated, redirect to login page
@@ -38,12 +43,9 @@ initializeDatabases().then(function (dbs) {
     });
 
     // Start app
-    app.listen(port, function () {
+    app.listen(port, () => {
         console.log('expressjs-login is running on port ' + port);
     });
+}
 
-}).catch(function (err) {
-    console.error("Failed to make all database connections!");
-    console.error(err);
-    process.exit(1);
-});
+startApp();

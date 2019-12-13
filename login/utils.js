@@ -6,10 +6,9 @@ const config = require('./config.json');
 const sha512 = function (password, salt) {
     const hash = crypto.createHmac('sha512', salt);
     hash.update(password);
-    const value = hash.digest('hex');
     return {
         salt: salt,
-        passwordHash: value
+        passwordHash: hash.digest('hex')
     }
 }
 module.exports.getRandomString = function (length) {
